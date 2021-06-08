@@ -2,6 +2,7 @@ package com.navi.springbootpostgresvue.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,7 @@ public class Produto implements Serializable{
 	private Long id;
 	private String nome;
 	private Double preco;
+	@Column(unique = true)
 	private String codigo;
 	private Integer categoria;
 	private Integer status;
