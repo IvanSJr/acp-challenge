@@ -3,11 +3,15 @@ package com.navi.springbootpostgresvue.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import com.navi.springbootpostgresvue.entities.Produto;
 import com.navi.springbootpostgresvue.repositories.ProdutoRepository;
+import com.navi.springbootpostgresvue.services.exceptions.ResourceNotFoundException;
 
 @Component
 public class ProdutoService {
@@ -21,7 +25,7 @@ public class ProdutoService {
 	
 	public Produto buscarPorId(Long id) {
 		Optional<Produto> obj = produtoRepository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Produto inserir(Produto obj) {
@@ -29,7 +33,11 @@ public class ProdutoService {
 	}
 	
 	public void deletarPorId(Long id) {
+		try {
 		produtoRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	
 	public void deletarTodos() {
@@ -41,9 +49,14 @@ public class ProdutoService {
 	}*/
 	
 	public Produto atualizar(Long id, Produto obj) {
-		Produto entidade = produtoRepository.getById(id);
-		atualizarDados(entidade, obj);
-		return produtoRepository.save(entidade);
+		try {
+			Produto entidade = produtoRepository.getById(id);
+			atualizarDados(entidade, obj);
+			return produtoRepository.save(entidade);
+		}catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+
 	}
 
 	private void atualizarDados(Produto entidade, Produto obj) {
