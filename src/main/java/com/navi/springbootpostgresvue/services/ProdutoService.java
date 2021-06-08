@@ -27,4 +27,16 @@ public class ProdutoService {
 	public Produto inserir(Produto obj) {
 		return produtoRepository.save(obj);
 	}
+	
+	public void deletarPorId(Long id) {
+		produtoRepository.deleteById(id);
+	}
+	
+	public void deletarPorIdSelecionado(List<Long> lista) {
+		produtoRepository.deleteAllById(lista);
+	}
+	
+	public void deletarTodos() {
+		produtoRepository.deleteAll();
+	}
 }

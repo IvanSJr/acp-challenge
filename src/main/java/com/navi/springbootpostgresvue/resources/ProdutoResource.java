@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,5 +42,17 @@ public class ProdutoResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/produto/{id}")
 				.buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
+	}
+	
+	@DeleteMapping("/produto/{id}")
+	public ResponseEntity<Void> deletarProduto(@PathVariable Long id){
+		service.deletarPorId(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<Void> deletarTodosProdutos(){
+		service.deletarTodos();
+		return ResponseEntity.noContent().build();
 	}
 }
