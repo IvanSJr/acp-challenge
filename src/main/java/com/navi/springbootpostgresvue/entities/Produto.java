@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.navi.springbootpostgresvue.entities.enums.Categoria;
+import com.navi.springbootpostgresvue.entities.enums.Status;
+
 @Entity
 public class Produto implements Serializable{
 
@@ -17,19 +20,22 @@ public class Produto implements Serializable{
 	private String nome;
 	private Double preco;
 	private String codigo;
-	
+	private Integer categoria;
+	private Integer status;
 	
 	public Produto() {
 		
 	}
 
 
-	public Produto(Long id, String nome, Double preco, String codigo) {
+	public Produto(Long id, String nome, Double preco, String codigo, Categoria categoria, Status status) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
 		this.codigo = codigo;
+		setCategoria(categoria);
+		setStatus(status);
 	}
 
 
@@ -70,6 +76,28 @@ public class Produto implements Serializable{
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+
+
+	public Categoria getCategoria() {
+		return Categoria.valueOf(categoria);
+	}
+
+
+	public void setCategoria(Categoria categoria) {
+		if (categoria != null) {
+			this.categoria = categoria.pegarCodigoEnumCategoria();
+		}
+	}
+
+
+	public Status getStatus() {
+		return Status.valueOf(status);
+	}
+
+
+	public void setStatus(Status status) {
+		this.status = status.pegarCodigoEnumStatus();
 	}
 
 
