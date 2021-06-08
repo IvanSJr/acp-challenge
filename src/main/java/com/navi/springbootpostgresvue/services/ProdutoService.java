@@ -32,11 +32,27 @@ public class ProdutoService {
 		produtoRepository.deleteById(id);
 	}
 	
-	public void deletarPorIdSelecionado(List<Long> lista) {
-		produtoRepository.deleteAllById(lista);
-	}
-	
 	public void deletarTodos() {
 		produtoRepository.deleteAll();
 	}
+	
+	/*public void deletarPorIdSelecionado(List<Long> lista) {
+		produtoRepository.deleteAllById(lista);
+	}*/
+	
+	public Produto atualizar(Long id, Produto obj) {
+		Produto entidade = produtoRepository.getById(id);
+		atualizarDados(entidade, obj);
+		return produtoRepository.save(entidade);
+	}
+
+	private void atualizarDados(Produto entidade, Produto obj) {
+		entidade.setNome(obj.getNome());
+		entidade.setPreco(obj.getPreco());
+		entidade.setCodigo(obj.getCodigo());
+		entidade.setCategoria(obj.getCategoria());
+		entidade.setStatus(obj.getStatus());
+	}
+	
+
 }
