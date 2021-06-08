@@ -23,5 +23,8 @@ public class ProdutoService {
 		Optional<Produto> obj = produtoRepository.findById(id);
 		return obj.get();
 	}
-
+	
+	public Produto inserir(Produto obj) {
+		return produtoRepository.save(obj);
+	}
 }
