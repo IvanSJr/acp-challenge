@@ -19,7 +19,7 @@ import com.navi.springbootpostgresvue.entities.Produto;
 import com.navi.springbootpostgresvue.services.ProdutoService;
 
 @RestController
-@RequestMapping
+@RequestMapping("/produto")
 public class ProdutoResource {
 	
 	@Autowired
